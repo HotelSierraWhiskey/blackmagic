@@ -110,20 +110,20 @@ const command_s samc_cmd_list[] = {
 #define SAMC_STATUSB_PROT    (1U << 16U)
 
 /* Device Identification Register (DID) */
-#define SAMC_DID_MASK          0xfe380000U
-#define SAMC_DID_CONST_VALUE   0x10000000U
+#define SAMC_DID_MASK          0xff380000U
+#define SAMC_DID_CONST_VALUE   0x11000000U
 #define SAMC_DID_DEVSEL_MASK   0xffU
 #define SAMC_DID_DEVSEL_POS    0U
 #define SAMC_DID_REVISION_MASK 0x0fU
 #define SAMC_DID_REVISION_POS  8U
-#define SAMC_DID_SERIES_MASK   0x3fU
+#define SAMC_DID_SERIES_MASK   0x1fU
 #define SAMC_DID_SERIES_POS    16U
-#define SAMC_DID_FAMILY_MASK   0x1fU
+#define SAMC_DID_FAMILY_MASK   0x3fU
 #define SAMC_DID_FAMILY_POS    23U
 
 /* Peripheral ID */
-#define SAMC_PID_MASK        0x00f7ffffU
-#define SAMC_PID_CONST_VALUE 0x0001fcd0U
+#define SAMC_PID_MASK        0x00ffffffU
+#define SAMC_PID_CONST_VALUE 0x0009fcD0U
 
 /* Component ID */
 #define SAMC_CID_VALUE 0xb105100dU
@@ -136,35 +136,25 @@ typedef struct samc_part {
 	uint8_t variant;
 } samc_part_s;
 
-static const samc_part_s samc_d21_parts[] = {
-	{0x00, 'J', 18, 'A'}, /* samc21J18A */
-	{0x01, 'J', 17, 'A'}, /* samc21J17A */
-	{0x02, 'J', 16, 'A'}, /* samc21J16A */
-	{0x03, 'J', 15, 'A'}, /* samc21J15A */
-	{0x05, 'G', 18, 'A'}, /* samc21G18A */
-	{0x06, 'G', 17, 'A'}, /* samc21G17A */
-	{0x07, 'G', 16, 'A'}, /* samc21G16A */
-	{0x08, 'G', 15, 'A'}, /* samc21G15A */
-	{0x0a, 'E', 18, 'A'}, /* samc21E18A */
-	{0x0b, 'E', 17, 'A'}, /* samc21E17A */
-	{0x0c, 'E', 16, 'A'}, /* samc21E16A */
-	{0x0d, 'E', 15, 'A'}, /* samc21E15A */
-	{0x0f, 'G', 18, 'A'}, /* samc21G18A (WLCSP) */
-	{0x10, 'G', 17, 'A'}, /* samc21G17A (WLCSP) */
-	{0x20, 'J', 16, 'B'}, /* samc21J16B */
-	{0x21, 'J', 15, 'B'}, /* samc21J15B */
-	{0x23, 'G', 16, 'B'}, /* samc21G16B */
-	{0x24, 'G', 15, 'B'}, /* samc21G15B */
-	{0x26, 'E', 16, 'B'}, /* samc21E16B */
-	{0x27, 'E', 15, 'B'}, /* samc21E15B */
-	{0x55, 'E', 16, 'B'}, /* samc21E16B (WLCSP) */
-	{0x56, 'E', 15, 'B'}, /* samc21E15B (WLCSP) */
-	{0x62, 'E', 16, 'C'}, /* samc21E16C (WLCSP) */
-	{0x63, 'E', 15, 'C'}, /* samc21E15C (WLCSP) */
+
+static const samc_part_s samc_20_parts[] = {
+	{0x00, 'J', 18, 'A'}, /* ATSAMC20J18 */
+	{0x01, 'J', 17, 'A'}, /* ATSAMC20J17 */
+	{0x02, 'J', 16, 'A'}, /* ATSAMC20J16 */
+	{0x03, 'J', 15, 'A'}, /* ATSAMC20J15 */
+	{0x05, 'G', 18, 'A'}, /* ATSAMC20G18 */
+	{0x06, 'G', 17, 'A'}, /* ATSAMC20G17 */
+	{0x07, 'G', 16, 'A'}, /* ATSAMC20G16 */
+	{0x08, 'G', 15, 'A'}, /* ATSAMC20G15 */
+	{0x0A, 'E', 18, 'A'}, /* ATSAMC20E18 */
+	{0x0B, 'E', 17, 'A'}, /* ATSAMC20E17 */
+	{0x0C, 'E', 16, 'A'}, /* ATSAMC20E16 */
+	{0x0D, 'E', 15, 'A'}, /* ATSAMC20E15 */
 	{0xff, 0, 0, 0},      /* Sentinel entry */
 };
 
-static const samc_part_s samc_c21_parts[] = {
+
+static const samc_part_s samc_21_parts[] = {
 	{0x00, 'J', 18, 'A'}, /* SAMC21J18A */
 	{0x01, 'J', 17, 'A'}, /* SAMC21J17A */
 	{0x02, 'J', 16, 'A'}, /* SAMC21J16A */
@@ -182,42 +172,6 @@ static const samc_part_s samc_c21_parts[] = {
 	{0xff, 0, 0, 0},      /* Sentinel entry */
 };
 
-static const samc_part_s samc_l21_parts[] = {
-	{0x00, 'J', 18, 'A'}, /* SAML21J18A */
-	{0x01, 'J', 17, 'A'}, /* SAML21J17A */
-	{0x02, 'J', 16, 'A'}, /* SAML21J16A */
-	{0x05, 'G', 18, 'A'}, /* SAML21G18A */
-	{0x06, 'G', 17, 'A'}, /* SAML21G17A */
-	{0x07, 'G', 16, 'A'}, /* SAML21G16A */
-	{0x0a, 'E', 18, 'A'}, /* SAML21E18A */
-	{0x0b, 'E', 17, 'A'}, /* SAML21E17A */
-	{0x0c, 'E', 16, 'A'}, /* SAML21E16A */
-	{0x0d, 'E', 15, 'A'}, /* SAML21E15A */
-	{0x0f, 'J', 18, 'B'}, /* SAML21J18B */
-	{0x10, 'J', 17, 'B'}, /* SAML21J17B */
-	{0x11, 'J', 16, 'B'}, /* SAML21J16B */
-	{0x14, 'G', 18, 'B'}, /* SAML21G18B */
-	{0x15, 'G', 17, 'B'}, /* SAML21G17B */
-	{0x16, 'G', 16, 'B'}, /* SAML21G16B */
-	{0x19, 'E', 18, 'B'}, /* SAML21E18B */
-	{0x1a, 'E', 17, 'B'}, /* SAML21E17B */
-	{0x1b, 'E', 16, 'B'}, /* SAML21E16B */
-	{0x1c, 'E', 15, 'B'}, /* SAML21E15B */
-	{0xff, 0, 0, 0},      /* Sentinel entry */
-};
-
-static const samc_part_s samc_l22_parts[] = {
-	{0x00, 'N', 18, 'A'}, /* SAML22N18 */
-	{0x01, 'N', 17, 'A'}, /* SAML22N17 */
-	{0x02, 'N', 16, 'A'}, /* SAML22N16 */
-	{0x05, 'J', 18, 'A'}, /* SAML22J18 */
-	{0x06, 'J', 17, 'A'}, /* SAML22J17 */
-	{0x07, 'J', 16, 'A'}, /* SAML22J16 */
-	{0x0a, 'G', 18, 'A'}, /* SAML22G18 */
-	{0x0b, 'G', 17, 'A'}, /* SAML22G17 */
-	{0x0c, 'G', 16, 'A'}, /* SAML22G16 */
-	{0xff, 0, 0, 0},      /* Sentinel entry */
-};
 
 /*
  * Overloads the default cortexm reset function with a version that
@@ -353,59 +307,42 @@ typedef struct samc_descr {
 samc_descr_s samc_parse_device_id(uint32_t did)
 {
 	samc_descr_s samc = {0};
-	const samc_part_s *parts = samc_d21_parts;
+	const samc_part_s *parts = samc_20_parts;
 	samc.ram_size = 0x8000;
 	samc.flash_size = 0x40000;
 
 	/* Family */
 	const uint8_t family = (did >> SAMC_DID_FAMILY_POS) & SAMC_DID_FAMILY_MASK;
-	switch (family) {
-	case 0:
-		samc.family = 'D';
-		break;
-	case 1:
-		samc.family = 'L';
-		parts = samc_l21_parts;
-		break;
-	case 2:
+
+	if (family == 2)
+	{
 		samc.family = 'C';
-		break;
 	}
+
 	/* Series */
 	const uint8_t series = (did >> SAMC_DID_SERIES_POS) & SAMC_DID_SERIES_MASK;
 	switch (series) {
 	case 0:
+		parts = samc_20_parts;
 		samc.series = 20;
 		break;
 	case 1:
-		if (family == 2)
-			parts = samc_c21_parts;
+		parts = samc_21_parts;
 		samc.series = 21;
-		break;
-	case 2:
-		if (family == 1) {
-			samc.series = 22;
-			parts = samc_l22_parts;
-		} else
-			samc.series = 10;
-		break;
-	case 3:
-		samc.series = 11;
-		break;
-	case 4:
-		samc.series = 9;
 		break;
 	default:
 		samc.series = 0;
 		break;
 	}
+
 	/* Revision */
 	const uint8_t revision = (did >> SAMC_DID_REVISION_POS) & SAMC_DID_REVISION_MASK;
 	samc.revision = (char)('A' + revision);
 
 	const uint8_t devsel = (did >> SAMC_DID_DEVSEL_POS) & SAMC_DID_DEVSEL_MASK;
+	
 	switch (samc.series) {
-	case 20U: /* SAM D20 */
+	case 20U: /* SAM C20 */
 		switch (devsel / 5U) {
 		case 0U:
 			samc.pin = 'J';
@@ -423,8 +360,7 @@ samc_descr_s samc_parse_device_id(uint32_t did)
 		samc.mem = 18U - (devsel % 5U);
 		samc.variant = 'A';
 		break;
-	case 21U: /* SAM D21/L21 */
-	case 22U: /* SAM L22 */
+	case 21U: /* SAM C21 */
 		for (size_t i = 0; parts[i].devsel != 0xffU; ++i) {
 			if (parts[i].devsel == devsel) {
 				samc.pin = parts[i].pin;
@@ -434,40 +370,7 @@ samc_descr_s samc_parse_device_id(uint32_t did)
 			}
 		}
 		break;
-	case 10U: /* SAM D10 */
-	case 11U: /* SAM D11 */
-		switch (devsel / 3U) {
-		case 0U:
-			samc.package[0] = 'M';
-			break;
-		case 1U:
-			samc.package[0] = 'S';
-			samc.package[1] = 'S';
-			break;
-		}
-		samc.pin = 'D';
-		samc.mem = 14U - (devsel % 3U);
-		samc.variant = 'A';
-		break;
-	case 9U: /* SAM D09 */
-		samc.ram_size = 4096;
-		switch (devsel) {
-		case 0U:
-			samc.pin = 'D';
-			samc.mem = 14;
-			samc.flash_size = 16384;
-			samc.package[0] = 'M';
-			break;
-		case 7U:
-			samc.pin = 'C';
-			samc.mem = 13;
-			samc.flash_size = 8192;
-			break;
-		}
-		samc.variant = 'A';
-		break;
 	}
-
 	return samc;
 }
 
@@ -846,7 +749,7 @@ static bool samc_cmd_serial(target_s *t, int argc, const char **argv)
 	tc_printf(t, "Serial Number: 0x");
 
 	for (size_t i = 0; i < 4U; ++i)
-		tc_printf(t, "%08x", target_mem_read32(t, samc_NVM_SERIAL(i)));
+		tc_printf(t, "%08x", target_mem_read32(t, SAMC_NVM_SERIAL(i)));
 	tc_printf(t, "\n");
 	return true;
 }
