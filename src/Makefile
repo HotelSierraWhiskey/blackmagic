@@ -74,6 +74,7 @@ SRC =              \
 	rp.c           \
 	sam3x.c        \
 	sam4l.c        \
+	samc.c		   \
 	samd.c         \
 	samx5x.c       \
 	semihosting.c  \
